@@ -9,4 +9,5 @@ class LoadedParent(Base):
     id = sa.Column(sa.Integer, sa.Identity(), primary_key=True)
     value = sa.Column(sa.String(50))
 
-    children = sa.orm.relationship('UnloadedChild', back_populates='parent')
+    # uncomment me
+    # children = sa.orm.relationship('UnloadedChild', back_populates='parent')
