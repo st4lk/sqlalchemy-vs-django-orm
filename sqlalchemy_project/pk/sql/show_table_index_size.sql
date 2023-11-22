@@ -1,0 +1,22 @@
+\c sqlal_project;
+
+select '------ pk_only ---------';
+\d pk_only;
+\dt+ pk_only;
+\di+ pk_only_pkey;
+select '------ pk_index ---------';
+\d pk_index;
+\dt+ pk_index;
+\di+ pk_index_pkey|ix_pk_index_id;
+select '------ pk_unique ---------';
+\d pk_unique;
+\dt+ pk_unique;
+\di+ pk_unique_pkey|pk_unique_id_key;
+select '------ pk_index_unique ---------';
+\d pk_index_unique;
+\dt+ pk_index_unique;
+\di+ pk_index_unique_pkey|ix_pk_index_unique_id;
+select '------ pk_identity ---------';
+\d pk_identity;
+\dt+ pk_identity;
+\di+ pk_identity_pkey;
