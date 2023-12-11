@@ -27,7 +27,6 @@ def pre_load_all_models():
         if not folder.startswith('_') and not folder.startswith('.'):
             for module_path in [
                 BASE_PATH / folder / 'models.py',
-                BASE_PATH / folder / 'signal_handlers.py',
             ]:
                 if os.path.exists(module_path):
                     module_name = f'{folder}.models'

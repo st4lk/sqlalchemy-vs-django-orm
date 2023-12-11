@@ -52,3 +52,61 @@ async def get_parent(
             ],
         } for parent in parents
     ]
+
+
+@router.get(
+    path='/api/relations/st4lk/parents/',
+    operation_id='api_models',
+    status_code=200,
+)
+async def get_st4lk(
+        request: Request,
+        db_session: AsyncSession = Depends(get_session),
+):
+    query = sa.Select(
+        RelParent,
+    ).options(
+        sa.orm.selectinload(RelParent.children).joinedload(RelChild.parent),
+    )
+    cursor = await db_session.execute(query)
+    parents = cursor.scalars().all()
+    return [
+        {
+            'id': parent.id,
+            'value': parent.value,
+            'children': [
+                {
+                    'id': child.id,
+                    'value': child.value,
+                    'parent.value': child.parent.value,
+                }
+                for child in parent.children
+            ],
+        } for parent in parents
+    ]
+
+
+@router.get(
+    path='/api/relations/st4lk/children/',
+    operation_id='api_models',
+    status_code=200,
+)
+async def get_st4lk_children(
+        request: Request,
+        db_session: AsyncSession = Depends(get_session),
+):
+    query = sa.Select(
+        RelChild,
+    ).options(
+        sa.orm.joinedload(RelChild.parent),
+    )
+    cursor = await db_session.execute(query)
+    children = cursor.scalars().all()
+    return [
+        {
+            'id': child.id,
+            'value': child.value,
+            'parent.id': child.parent.id,
+            'parent.value': child.parent.value,
+        } for child in children
+    ]
